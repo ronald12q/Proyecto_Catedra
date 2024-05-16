@@ -4,7 +4,12 @@
  */
 package Biblioteca.GUI;
 
+import Biblioteca.DAL.ConexionMySQL;
+import Biblioteca.DAL.RegistroUsuarios;
+import Biblioteca.POJOS.Usuarios;
 import java.awt.Color;
+import java.sql.Connection;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -149,8 +154,13 @@ public class Restablecer extends javax.swing.JFrame {
         btnGuardar.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         btnGuardar.setForeground(new java.awt.Color(66, 64, 64));
         btnGuardar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/guardar.png"))); // NOI18N
+        btnGuardar.setIcon(new javax.swing.ImageIcon("C:\\Users\\alepe\\Documents\\Proyecto_Catedra\\src\\Biblioteca\\GUI\\imagenes\\guardar.png")); // NOI18N
         btnGuardar.setText("guardar");
+        btnGuardar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnGuardarMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlGuardarLayout = new javax.swing.GroupLayout(pnlGuardar);
         pnlGuardar.setLayout(pnlGuardarLayout);
@@ -185,7 +195,7 @@ public class Restablecer extends javax.swing.JFrame {
         btnRegresar.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         btnRegresar.setForeground(new java.awt.Color(66, 64, 64));
         btnRegresar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        btnRegresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/regresar.png"))); // NOI18N
+        btnRegresar.setIcon(new javax.swing.ImageIcon("C:\\Users\\alepe\\Documents\\Proyecto_Catedra\\src\\Biblioteca\\GUI\\imagenes\\regresar.png")); // NOI18N
         btnRegresar.setText("regresar");
         btnRegresar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -272,8 +282,7 @@ public class Restablecer extends javax.swing.JFrame {
                         .addGap(33, 33, 33))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(pnlBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(pnlBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(1, 1, 1)
@@ -353,6 +362,35 @@ public class Restablecer extends javax.swing.JFrame {
         inicio.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnRegresarMouseClicked
+
+    private void btnGuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseClicked
+        
+      String Carnet = txtCarnet.getText();
+    String nuevaContra = txtClave.getText();
+    
+    
+    Connection conexion1 = ConexionMySQL.obtenerConexion();
+    
+    
+    RegistroUsuarios registroUsuarios = new RegistroUsuarios(conexion1);
+    
+    
+    Usuarios usuario1 = new Usuarios();
+    usuario1.setIdentificacion(Carnet);
+    usuario1.setClave(nuevaContra);
+    
+    
+    boolean actualizacionExitosa = registroUsuarios.ActualizarUser(usuario1);
+    
+    
+    if (actualizacionExitosa) {
+        JOptionPane.showMessageDialog(this, "Contraseña actualizada correctamente.");
+    } else {
+        JOptionPane.showMessageDialog(null, "Algo salio mal Identificacion no valida o no encontrada", "Advertencia", JOptionPane.WARNING_MESSAGE);
+    }
+        
+        
+    }//GEN-LAST:event_btnGuardarMouseClicked
 
     /**
      * @param args the command line arguments
