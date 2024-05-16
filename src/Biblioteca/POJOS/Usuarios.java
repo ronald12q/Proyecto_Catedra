@@ -26,6 +26,16 @@ public class Usuarios {
         
     }
 
+    public Usuarios() {
+        this.identificacion = "";
+        this.clave = "";
+        this.nombre = "";
+        this.apellido = "";
+        this.usuario = "";
+        this.nacimiento = "";
+        this.privilegio = "";
+    }
+
     public String getIdentificacion() {
         return identificacion;
     }
