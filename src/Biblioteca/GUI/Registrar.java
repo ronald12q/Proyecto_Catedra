@@ -1,7 +1,12 @@
 package Biblioteca.GUI;
 
+import static Biblioteca.DAL.ConexionMySQL.obtenerConexion;
+import Biblioteca.DAL.RegistroUsuarios;
+import Biblioteca.POJOS.Usuarios;
 import java.awt.Color;
 import java.awt.Font;
+import java.sql.Connection;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -153,7 +158,6 @@ public class Registrar extends javax.swing.JFrame {
         cobxPrivilegio.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         cobxPrivilegio.setForeground(new java.awt.Color(0, 0, 0));
         cobxPrivilegio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar", "Administrador", "Profesor", "Estudiante" }));
-        cobxPrivilegio.setBorder(null);
 
         pnlGuardar.setBackground(new java.awt.Color(197, 197, 197));
         pnlGuardar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -162,6 +166,11 @@ public class Registrar extends javax.swing.JFrame {
         btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Biblioteca/GUI/imagenes/guardar.png"))); // NOI18N
         btnGuardar.setText("Guardar");
         btnGuardar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnGuardar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnGuardarMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlGuardarLayout = new javax.swing.GroupLayout(pnlGuardar);
         pnlGuardar.setLayout(pnlGuardarLayout);
@@ -402,6 +411,33 @@ public class Registrar extends javax.swing.JFrame {
         inicio.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnRegresarMouseClicked
+
+    private void btnGuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseClicked
+         String identificacion = txtCarnet.getText();
+    String clave = new String(txtClave.getPassword());
+    String nombre = txtNombre.getText();
+    String apellido = txtApellido.getText();
+    String usuario = txtUsuario.getText();
+    String nacimiento = txtCumple.getText(); 
+    String privilegio = (String) cobxPrivilegio.getSelectedItem();
+
+    
+    Usuarios nuevoUsuario = new Usuarios(identificacion, clave, nombre, apellido, usuario, nacimiento, privilegio);
+    
+   
+    Connection conexion = obtenerConexion(); 
+    RegistroUsuarios registroUsuarios = new RegistroUsuarios(conexion);
+
+    boolean registroExitoso = registroUsuarios.RegistrarUser(nuevoUsuario);
+
+    
+    if (registroExitoso) {
+        JOptionPane.showMessageDialog(null, "Usuario registrado correctamente.");
+        // Aquí podrías añadir código adicional, como limpiar los campos del formulario, etc.
+    } else {
+        JOptionPane.showMessageDialog(null, "Algo a salido mal no se ha podido registrar.");
+    }
+    }//GEN-LAST:event_btnGuardarMouseClicked
 
    
     public static void main(String args[]) {
