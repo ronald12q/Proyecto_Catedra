@@ -433,7 +433,7 @@ public class Registrar extends javax.swing.JFrame {
     
     if (registroExitoso) {
         JOptionPane.showMessageDialog(null, "Usuario registrado correctamente.");
-        // Aquí podrías añadir código adicional, como limpiar los campos del formulario, etc.
+        
     } else {
         JOptionPane.showMessageDialog(null, "Algo a salido mal no se ha podido registrar.");
     }
